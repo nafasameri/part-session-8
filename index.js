@@ -237,37 +237,28 @@ const category = {
     adult: { thin: [], fit: [], fat: [] }
 };
 
-// users.map((item) => {
-//     item.age
-// });
+function addUser(obj, user, down, up) {
+    if (user.weight < down)
+        obj.thin.push(user);
+    else if (user.weight >= down && user.weight <= up)
+        obj.fit.push(user);
+    else if (user.weight > up)
+        obj.fat.push(user);
+}
 
-for (const item of users) {
+users.map((item) => {
+
     if (item.age < 16) {
-        if (item.weight < 35)
-            category.child.thin.push(item);
-        else if (item.weight >= 35 && item.weight <= 45)
-            category.child.fit.push(item);
-        else if (item.weight > 45)
-            category.child.fat.push(item);
+        addUser(category.child, item, 35, 45);
     }
 
     if (item.age >= 16 && item.age <= 30) {
-        if (item.weight < 55)
-            category.young.thin.push(item);
-        else if (item.weight >= 55 && item.weight <= 80)
-            category.young.fit.push(item);
-        else if (item.weight > 80)
-            category.young.fat.push(item);
+        addUser(category.young, item, 55, 80);
     }
 
     if (item.age > 30) {
-        if (item.weight < 65)
-            category.adult.thin.push(item);
-        else if (item.weight >= 65 && item.weight <= 85)
-            category.adult.fit.push(item);
-        else if (item.weight > 85)
-            category.adult.fat.push(item);
+        addUser(category.adult, item, 65, 85);
     }
-}
+});
 
-console.log(category);
+console.log(JSON.stringify(category));
